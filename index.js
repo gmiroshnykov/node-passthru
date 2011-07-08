@@ -1,7 +1,8 @@
 var spawn = require('child_process').spawn;
 
+var children = [];
+
 // TODO: this stuff is experimental
-//var children = [];
 //process.on('SIGINT', killChildren('SIGINT'));
 //process.on('SIGTERM', killChildren('SIGTERM'));
 
