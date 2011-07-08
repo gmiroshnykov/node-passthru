@@ -1,17 +1,18 @@
 var spawn = require('child_process').spawn;
 
-var children = [];
-process.on('SIGINT', killChildren('SIGINT'));
-process.on('SIGTERM', killChildren('SIGTERM'));
+// TODO: this stuff is experimental
+//var children = [];
+//process.on('SIGINT', killChildren('SIGINT'));
+//process.on('SIGTERM', killChildren('SIGTERM'));
 
-function killChildren(signal) {
-    return function() {
-        children.forEach(function(child) {
-            console.log('Killing child with ', signal);
-            //child.kill(signal);
-        });
-    };
-}
+//function killChildren(signal) {
+//    return function() {
+//        children.forEach(function(child) {
+//            console.log('Killing child with ', signal);
+//            child.kill(signal);
+//        });
+//    };
+//}
 
 module.exports = function(command, options, callback) {
     // passthru(command, callback)
