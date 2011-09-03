@@ -1,5 +1,5 @@
 { "name" : "passthru"
-, "version" : "0.0.3"
+, "version" : "0.0.4"
 , "description" : "Spawns a child process attached to parent's stdin, stdout and stderr. Inspired by PHP's passthru()."
 , "keywords" :
  [ "passthru"
