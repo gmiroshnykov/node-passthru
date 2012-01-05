@@ -17,26 +17,28 @@ module.exports = function(command, options, callback) {
         command = command.split(' ');
     }
 
-    // use current process' stdin, stdout and stderr by default
-    if (typeof options.customFds == 'undefined') {
-        options.customFds = [
-            process.stdin,
-            process.stdout,
-            process.stderr
-        ];
-    }
-
     // command = "ls"
     // args = ["-la", "/tmp"]
     var args = command;
     command = args.shift();
 
     var child = spawn(command, args, options);
+    child.stdout.on('data', function(data) {
+        process.stdout.write(data);
+    });
+
+    child.stderr.on('data', function(data) {
+        process.stderr.write(data);
+    });
+
+    // FIXME: process.stdin is not usable in node v0.6.6, see
+    // https://github.com/joyent/node/pull/1934
+
     child.on('exit', function(code, signal) {
         if (!callback) {
             return;
         }
-        
+
         if (code) {
             var msg = 'Process exit with code ' + code;
             if (signal) {

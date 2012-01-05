@@ -1,5 +1,5 @@
 { "name" : "passthru"
-, "version" : "0.0.4"
+, "version" : "0.0.5"
 , "description" : "Spawns a child process attached to parent's stdin, stdout and stderr. Inspired by PHP's passthru()."
 , "keywords" :
  [ "passthru"
@@ -13,7 +13,6 @@
  , "url" : "https://github.com/laggyluke/node-passthru.git"
  }
 , "engines" :
- { "node" : ">0.2"
- , "npm" : "~1"
+ { "node" : "0.6.x"
  }
 }
