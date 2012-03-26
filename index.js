@@ -1,6 +1,13 @@
-var spawn = require('child_process').spawn;
+var tty = require('tty'),
+    spawn = require('child_process').spawn,
+    util = require('util');
 
 module.exports = function(command, options, callback) {
+    var defaultOptions = {
+        cwd: process.cwd(),
+        env: process.env
+    };
+
     // passthru(command, callback)
     if (typeof options == 'function') {
         callback = options;
@@ -17,22 +24,24 @@ module.exports = function(command, options, callback) {
         command = command.split(' ');
     }
 
+    if (!options.cwd) {
+        options.cwd = process.cwd();
+    }
+
+    if (!options.env) {
+        options.env = process.env;
+    }
+
     // command = "ls"
     // args = ["-la", "/tmp"]
     var args = command;
     command = args.shift();
 
     var child = spawn(command, args, options);
-    child.stdout.on('data', function(data) {
-        process.stdout.write(data);
-    });
-
-    child.stderr.on('data', function(data) {
-        process.stderr.write(data);
-    });
-
-    // FIXME: process.stdin is not usable in node v0.6.6, see
-    // https://github.com/joyent/node/pull/1934
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+    process.stdin.pipe(child.stdin);
+    tty.setRawMode(true);
 
     child.on('exit', function(code, signal) {
         if (!callback) {
