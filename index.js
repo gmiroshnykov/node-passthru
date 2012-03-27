@@ -1,13 +1,7 @@
-var tty = require('tty'),
-    spawn = require('child_process').spawn,
-    util = require('util');
+var util = require('util'),
+    spawn = require('child_process').spawn;
 
 module.exports = function(command, options, callback) {
-    var defaultOptions = {
-        cwd: process.cwd(),
-        env: process.env
-    };
-
     // passthru(command, callback)
     if (typeof options == 'function') {
         callback = options;
@@ -32,16 +26,20 @@ module.exports = function(command, options, callback) {
         options.env = process.env;
     }
 
+    if (!options.customFds) {
+        options.customFds = [
+            process.stdin.fd,
+            process.stdout.fd,
+            process.stderr.fd
+        ];
+    }
+
     // command = "ls"
     // args = ["-la", "/tmp"]
     var args = command;
     command = args.shift();
 
     var child = spawn(command, args, options);
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-    process.stdin.pipe(child.stdin);
-    tty.setRawMode(true);
 
     child.on('exit', function(code, signal) {
         if (!callback) {
