@@ -4,6 +4,8 @@ node-passthru
 Spawns a child process attached to parent's stdin, stdout and stderr.
 Inspired by PHP's passthru().
 
+[![Build Status](https://secure.travis-ci.org/laggyluke/node-passthru.png)](http://travis-ci.org/laggyluke/node-passthru)
+
 Usage
 -----
 
