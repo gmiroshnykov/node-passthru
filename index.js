@@ -26,12 +26,8 @@ module.exports = function(command, options, callback) {
         options.env = process.env;
     }
 
-    if (!options.customFds) {
-        options.customFds = [
-            process.stdin.fd,
-            process.stdout.fd,
-            process.stderr.fd
-        ];
+    if (!options.stdio) {
+        options.stdio = 'inherit';
     }
 
     // command = "ls"
