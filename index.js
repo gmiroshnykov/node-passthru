@@ -42,7 +42,7 @@ module.exports = function(command, options, callback) {
             return;
         }
 
-        if (code) {
+        if (code !== 0) {
             var msg = 'Process exit with code ' + code;
             if (signal) {
                 msg += ' and signal ' + signal;
@@ -52,7 +52,7 @@ module.exports = function(command, options, callback) {
             error.code = code;
             error.signal = signal;
 
-            callback(error);
+            return callback(error);
         }
 
         callback();
