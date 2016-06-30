@@ -1,5 +1,6 @@
 var util = require('util'),
-    spawn = require('child_process').spawn;
+    spawn = require('child_process').spawn,
+    split = require('argv-split');;
 
 module.exports = function(command, options, callback) {
     // passthru(command, callback)
@@ -15,7 +16,7 @@ module.exports = function(command, options, callback) {
 
     // passthru("ls -la /tmp") => passthru(["ls", "-la", "/tmp"])
     if (typeof command == 'string') {
-        command = command.split(' ');
+        command = split(command);
     }
 
     if (!options.cwd) {
