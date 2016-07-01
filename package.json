@@ -19,5 +19,8 @@
   },
   "scripts": {
     "test": "test/test.sh"
+  },
+  "dependencies": {
+    "argv-split": "^1.0.1"
   }
 }
